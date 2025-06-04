@@ -5,6 +5,7 @@ PyPDF2
 python-dotenv
 langchain
 langchain-community
+langchain-huggingface
 torch
 sentence-transformers
 reportlab
