@@ -1,0 +1,10 @@
+chainlit
+google-generativeai
+faiss-cpu
+PyPDF2
+python-dotenv
+langchain
+langchain-community
+torch
+sentence-transformers
+reportlab
