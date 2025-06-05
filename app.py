@@ -3,9 +3,8 @@ import google.generativeai as genai
 import os
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings  # Updated import
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-import torch
 from dotenv import load_dotenv
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
@@ -165,4 +164,4 @@ async def on_message(message: cl.Message):
 
     # Offer PDF download
     pdf_buffer = create_pdf(query, response)
-    await cl.File(name="response.pdf", content=pdf_buffer.getvalue(), display_name="Download Response as PDF").send()
+    await cl.File(name="response.pdf", content=pdf_buffer.getvalue(), display_name="Download Response as PDF").send(for_id=message.id)
