@@ -123,6 +123,8 @@ async def start():
         ).send()
 
     try:
+        # Show loading message during PDF processing
+        await cl.Message(content="⏳ Processing your PDF(s)...").send()
         all_text = ""
         for file in files:
             with open(file.path, "rb") as f:
@@ -133,15 +135,13 @@ async def start():
                 all_text += text + "\n"
 
         if not all_text.strip():
-            await cl.Message(content="No text could be extracted from any PDF. Please try different documents.").send()
+            await cl.Message(content="❌ No text could be extracted from any PDF. Please try different documents.").send()
             return
 
         text_chunks = split_text(all_text)
         vector_store = create_vector_store(text_chunks)
 
-        await cl.Message(
-            content="✅ All documents processed! You can now ask questions about the content."
-        ).send()
+        await cl.Message(content="✅ All documents processed! You can now ask questions about the content.").send()
     except Exception as e:
         await cl.Message(content=f"⚠️ Error processing the PDFs: {e}").send()
         raise
@@ -159,6 +159,8 @@ async def on_message(message: cl.Message):
         await cl.Message(content="❓ Please enter a valid question.").send()
         return
 
+    # Show loading message during answer generation
+    await cl.Message(content="🤖 Generating answer...").send()
     response = get_gemini_response(query, vector_store, selected_model)
     await cl.Message(content=f"**Answer:**\n{response}").send()
 
